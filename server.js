@@ -15,9 +15,9 @@ const jwt = require('jsonwebtoken');
 
 const app = express();
 const server = http.createServer(app);
-
+const FRONTEND_URL = process.env.FRONTEND_URL_K;
 const corOptions = {
-    origin:"http://localhost:5173",
+    origin:FRONTEND_URL,
     methods:["GET", "POST", "PATCH", "HEAD", "DELETE"],
     credentials:true
 }
@@ -29,9 +29,10 @@ app.use('/api/chat',chatRouter)
 app.use('/api/message',messageRouter)
 app.use('/api/upload',uploadRouter)
 // 🔌 Setup Socket.IO server
+
 const io = new Server(server, {
     cors: {
-      origin: "http://localhost:5173",
+      origin: FRONTEND_URL,
       methods: ["GET", "POST"]
     }
   });
