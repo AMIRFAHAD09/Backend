@@ -12,12 +12,22 @@ const jwt = require('jsonwebtoken');
 // app.get('/',(req,res) => {
 //     res.status(200).send("this is chat msg");
 // })
+const allowedOrigins = [
+  "http://localhost:5173",
+  process.env.FRONTEND_URL_K,
+];
 
 const app = express();
 const server = http.createServer(app);
 const FRONTEND_URL = process.env.FRONTEND_URL_K;
 const corOptions = {
-    origin:FRONTEND_URL,
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
     methods:["GET", "POST", "PATCH", "HEAD", "DELETE"],
     credentials:true
 }
