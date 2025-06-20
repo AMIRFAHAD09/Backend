@@ -41,11 +41,19 @@ app.use('/api/upload',uploadRouter)
 // 🔌 Setup Socket.IO server
 
 const io = new Server(server, {
-    cors: {
-      origin: FRONTEND_URL,
-      methods: ["GET", "POST"]
-    }
-  });
+  cors: {
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ["GET", "POST"],
+    credentials: true
+  }
+});
+
 
   
 
