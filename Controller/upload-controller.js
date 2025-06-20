@@ -4,10 +4,8 @@ const uploadProfilePic = async (req, res) => {
   try {
     const userId = req.params.id;
     
-    // const BASE_URL = process.env.BASE_URL || `${req.protocol}://${req.get("host")}`;
-    // const imagePath = `${BASE_URL}/uploads/${req.file.filename}`;
-
-    const imagePath = `/uploads/${req.file.filename}`;
+    const BASE_URL = process.env.BASE_URL || `${req.protocol}://${req.get("host")}`;
+    const imagePath = `${BASE_URL}/uploads/${req.file.filename}`;
 
     const updatedUser = await User.findByIdAndUpdate(
       userId,
